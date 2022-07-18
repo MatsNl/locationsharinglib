@@ -119,14 +119,14 @@ class Service:
         except FileNotFoundError:
             message = 'Could not open cookies file, either file does not exist or no read access.'
             raise InvalidCookies(message)
-        try:
-            session.cookies.update(pickle.load(cfile))
-            self._logger.debug('Successfully loaded pickled cookie!')
-            warnings.warn('Pickled cookie format is going to be deprecated in a future version, '
-                          'please start using a text base cookie file!')
-        except (pickle.UnpicklingError, KeyError, AttributeError, EOFError, ValueError):
-            self._logger.debug('Trying to load text based cookies.')
-            session = self._load_text_cookies(session, cfile)
+        # try:
+        #     session.cookies.update(pickle.load(cfile))
+        #     self._logger.debug('Successfully loaded pickled cookie!')
+        #     warnings.warn('Pickled cookie format is going to be deprecated in a future version, '
+        #                   'please start using a text base cookie file!')
+        # except (pickle.UnpicklingError, KeyError, AttributeError, EOFError, ValueError):
+        self._logger.debug('Trying to load text based cookies.')
+        session = self._load_text_cookies(session, cfile)
         cfile.close()
         return session
 
